@@ -67,8 +67,7 @@ class Automation {
                 for(typename NextMap::iterator iter = now->next->begin(); iter != now->next->end(); iter++) {
                     back = now->fail;
                     while(back != NULL) {
-                        backiter = back->next->find(iter->first); 
-                        if(backiter != back->next->end()) {
+                        if(back->next && (backiter = back->next->find(iter->first)) != back->next->end()) {
                             iter->second->fail = backiter->second;
                             break;
                         }
@@ -112,14 +111,12 @@ class Automation {
 
 int main(){ 
     Automation automationer;
-    //const char* keywords[] = {"she", "he", "say", "shr", "her"};
-    const char* keywords[] = {"she", "he", "say", "ays", "aysa"};
+    const char* keywords[] = {"she", "he", "say", "shr", "her"};
     for(size_t i = 0; i < sizeof(keywords) / sizeof(keywords[0]); i++) {
         automationer.insert(keywords[i], strlen(keywords[i]));
     }
     automationer.build();
-    //const char* sentence = "yasherhs";
-    const char* sentence = "saysay";
+    const char* sentence = "yasherhs";
     automationer.query(sentence, strlen(sentence));
     return 0; 
 }
